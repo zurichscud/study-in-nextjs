@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+// 3. 用户模型（一对多关联演示）
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // 一对多关系：一个用户可以有多篇文章
+  posts     Post[]
+
+  // 自定义映射表名
+  @@map("users")
+}
+
+// 4. 文章模型（一对多、多对多关联演示）
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(255)
+  content   String?  @db.Text
+  published Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // 外键与关联定义
+  authorId  String   @map("author_id")
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // 多对多关系：一篇文章可以有多个标签
+  tags      Tag[]
+
+  @@index([authorId])
+  @@map("posts")
+}
+
+// 5. 标签模型（多对多关联演示）
+model Tag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts Post[]
+
+  @@map("tags")
+}
+
+// 6. 枚举类型定义
+enum Role {
+  USER
+  ADMIN
+}
