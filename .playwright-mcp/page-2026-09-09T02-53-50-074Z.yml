@@ -1,0 +1,109 @@
+- generic [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - heading "Prisma 7 CRUD 演示" [level=1] [ref=e4]
+      - paragraph [ref=e5]:
+        - text: "模型:"
+        - code [ref=e6]: User(1)
+        - text: —
+        - code [ref=e7]: Post(N)
+        - text: —
+        - code [ref=e8]: Tag(M:N)
+        - text: ；当前共 4 篇文章
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - heading "1. C — 创建用户（create）" [level=2] [ref=e11]
+        - generic [ref=e12]:
+          - textbox "email（唯一）" [ref=e13]
+          - textbox "名字（可选）" [ref=e14]
+          - button "C ➜ create() 创建用户" [ref=e15]
+          - paragraph [ref=e102]: "✅ 创建用户成功: carol@example.com"
+      - generic [ref=e16]:
+        - heading "2. C — 创建文章（create + 关联）" [level=2] [ref=e17]
+        - generic [ref=e18]:
+          - combobox [ref=e19]:
+            - option "选择作者（外键）" [selected]
+            - option "alice@example.com"
+            - option "bob@example.com"
+            - option "carol@example.com"
+          - textbox "标题" [ref=e20]
+          - textbox "内容" [ref=e21]
+          - textbox "标签(逗号分隔)：prisma,postgres" [ref=e22]
+          - button "C ➜ create() 创建文章（含多对多标签）" [ref=e23]
+          - paragraph [ref=e111]: "✅ 创建文章成功: 《多对多标签测试》 by carol@example.com"
+    - generic [ref=e24]:
+      - heading "3. R — 条件查询（findMany / count）" [level=2] [ref=e25]
+      - generic [ref=e26]:
+        - textbox "标题关键词" [ref=e27]: 多对多
+        - generic [ref=e28]:
+          - checkbox "只看已发布" [checked] [active] [ref=e29]
+          - text: 只看已发布
+        - button "R ➜ findMany()" [ref=e30]
+        - code [ref=e31]: where + orderBy + include + take
+    - generic [ref=e32]:
+      - generic [ref=e33]:
+        - heading "用户列表（findMany + _count）" [level=2] [ref=e34]
+        - list [ref=e35]:
+          - listitem [ref=e36]:
+            - generic [ref=e37]: 2篇
+            - generic [ref=e38]: alice@example.com
+            - generic [ref=e39]: Alice
+            - button "U 改名" [ref=e41]
+            - button "D 删除(级联)" [ref=e43]
+          - listitem [ref=e44]:
+            - generic [ref=e45]: 1篇
+            - generic [ref=e46]: bob@example.com
+            - generic [ref=e47]: Bob
+            - button "U 改名" [ref=e49]
+            - button "D 删除(级联)" [ref=e51]
+          - listitem [ref=e103]:
+            - generic [ref=e104]: 1篇
+            - generic [ref=e105]: carol@example.com
+            - generic [ref=e106]: Carol
+            - button "U 改名" [ref=e108]
+            - button "D 删除(级联)" [ref=e110]
+      - generic [ref=e52]:
+        - heading "文章列表（findMany + include 关联）" [level=2] [ref=e53]
+        - list [ref=e54]:
+          - listitem [ref=e112]:
+            - generic [ref=e113]: "#4"
+            - generic: 多对多标签测试
+            - generic [ref=e114]: carol@example.com
+            - generic [ref=e115]: prisma,nextjs
+            - generic [ref=e116]: 已发布
+            - button "U 切换" [ref=e118]
+            - button "D 删除" [ref=e120]
+          - listitem [ref=e55]:
+            - generic [ref=e56]: "#3"
+            - generic: 草稿：还没想好
+            - generic [ref=e57]: bob@example.com
+            - generic [ref=e58]: 无标签
+            - generic [ref=e59]: 草稿
+            - button "U 切换" [ref=e61]
+            - button "D 删除" [ref=e63]
+          - listitem [ref=e64]:
+            - generic [ref=e65]: "#2"
+            - generic: PostgreSQL 调优
+            - generic [ref=e66]: alice@example.com
+            - generic [ref=e67]: postgres
+            - generic [ref=e68]: 草稿
+            - button "U 切换" [ref=e70]
+            - button "D 删除" [ref=e72]
+          - listitem [ref=e73]:
+            - generic [ref=e74]: "#1"
+            - generic: Prisma 入门
+            - generic [ref=e75]: alice@example.com
+            - generic [ref=e76]: prisma
+            - generic [ref=e77]: 已发布
+            - button "U 切换" [ref=e79]
+            - button "D 删除" [ref=e81]
+    - generic [ref=e82]:
+      - heading "4. 批量 / 聚合 / upsert" [level=2] [ref=e83]
+      - generic [ref=e84]:
+        - generic [ref=e85]:
+          - textbox "批量用户邮箱" [ref=e86]: bulk@demo.com
+          - button "createMany + deleteMany" [ref=e87]
+        - button "_count 聚合查询" [ref=e89]
+        - button "upsert 标签" [ref=e91]
+  - button "Open Next.js Dev Tools" [ref=e98] [cursor=pointer]
+  - alert [ref=e92]

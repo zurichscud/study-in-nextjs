@@ -29,7 +29,7 @@ model User {
   @@map("users")
 }
 
-// 4. 文章模型（一对多、多对多关联演示）
+// 4. 文章模型（一对多关联演示）
 model Post {
   id        Int      @id @default(autoincrement())
   title     String   @db.VarChar(255)
@@ -42,23 +42,11 @@ model Post {
   authorId  String   @map("author_id")
   author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  // 多对多关系：一篇文章可以有多个标签
-  tags      Tag[]
-
   @@index([authorId])
   @@map("posts")
 }
 
-// 5. 标签模型（多对多关联演示）
-model Tag {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  posts Post[]
-
-  @@map("tags")
-}
-
-// 6. 枚举类型定义
+// 5. 枚举类型定义
 enum Role {
   USER
   ADMIN
