@@ -6,6 +6,9 @@ import { lusitana } from "@/app/ui/fonts";
 import { fetchRevenue, fetchLatestInvoices } from "@/app/lib/data";
 
 export default async function Page() {
+  // dashboard/page.tsx 是 async Server Component，没有任何动态 API（cookies/headers/searchParams/noStore），
+  // Next.js 默认会把它当作静态页面，在 next build 时就执行 fetchRevenue() 去查数据库（data.ts:22）。
+  // 所以 build 时必须能连上 POSTGRES_URL，否则构建失败；而且数据会被预渲染"冻结"，不会随数据库更新。
   const revenue = await fetchRevenue();
   const latestInvoices = await fetchLatestInvoices();
   return (
