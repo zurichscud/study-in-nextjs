@@ -1,6 +1,7 @@
 import Pagination from "@/app/ui/invoices/pagination";
 import Search from "@/app/ui/search";
 import Table from "@/app/ui/invoices/table";
+import Toast from "@/app/ui/toast";
 import { CreateInvoice } from "@/app/ui/invoices/buttons";
 import { lusitana } from "@/app/ui/fonts";
 import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
@@ -13,9 +14,10 @@ export default async function Page({
   searchParams: Promise<{
     query?: string;
     page?: string;
+    status?: string;
   }>;
 }) {
-  const { query = "", page } = await searchParams;
+  const { query = "", page, status } = await searchParams;
   const currentPage = Number(page) || 1;
   const totalPages = await fetchInvoicesPages(query);
   return (
@@ -33,6 +35,7 @@ export default async function Page({
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>
+      <Toast status={status} />
     </div>
   );
 }
